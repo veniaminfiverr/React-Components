@@ -17,13 +17,14 @@ app.use((req, res, next) => {
 app.use('/api/products', productRoutes);
 
 
-mongoose
-    .connect(
-        `mongodb://anasir:mongopassword@cluster0-shard-00-00.pc12j.mongodb.net:27017,cluster0-shard-00-01.pc12j.mongodb.net:27017,cluster0-shard-00-02.pc12j.mongodb.net:27017/store?ssl=true&replicaSet=atlas-yd2hqb-shard-0&authSource=admin&retryWrites=true&w=majority`
-    )
-    .then(() => {
-        app.listen(5000);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+app.listen(5000);
+// mongoose
+//     .connect(
+//         `mongodb://anasir:mongopassword@cluster0-shard-00-00.pc12j.mongodb.net:27017,cluster0-shard-00-01.pc12j.mongodb.net:27017,cluster0-shard-00-02.pc12j.mongodb.net:27017/store?ssl=true&replicaSet=atlas-yd2hqb-shard-0&authSource=admin&retryWrites=true&w=majority`
+//     )
+//     .then(() => {
+//
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });

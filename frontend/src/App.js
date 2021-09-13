@@ -1,6 +1,11 @@
+import React from "react";
 import './App.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
+import SignUp from './components/SignUp'
+
+
+
 
 function App() {
     const [title,setTitle] = useState();
@@ -8,7 +13,7 @@ function App() {
     const [savedProducts,setSavedProducts] = useState([]);
     const [foundProduct,setFoundProduct] = useState();
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         axios.get('http://localhost:5000/api/products').then((products)=>{
             const prods = [];
             products.data.map(product =>{
@@ -16,7 +21,7 @@ function App() {
             });
             setSavedProducts(prods);
         })
-    },[])
+    },[])*/
 
     const submitHandler = async event => {
         event.preventDefault();
@@ -39,44 +44,48 @@ function App() {
     };
 
   return (
-    <div className="App">
-        <form onSubmit={submitHandler}>
-          Title: <input name="title" onChange={(e)=>{setTitle(e.target.value)}}/>
-          Description: <input name="description" onChange={(e)=>{setDesc(e.target.value)}}/>
-          <input type="submit" value="Submit"/>
-        </form>
-        <table border={2}>
-            <tbody>
-            <tr>
-                <th>
-                    Title
-                </th>
-                <th>
-                    Description
-                </th>
-            </tr>
-        {
-            savedProducts ? savedProducts.map(product => (
-                <tr key={product.title}>
-                    <td> {product.title}</td>
-                    <td> {product.desc}</td>
-                </tr>
-            )) : ''
-        }
-            </tbody>
-        </table>
-        <form onSubmit={findSubmitHandler}>
-            Find: <input name="title" onChange={(e)=>{setTitle(e.target.value)}}/>
-            <input type="submit" value="Submit"/>
-        </form>
-        {
-            foundProduct ? (
-                <div>
-                    Found Product =   Title: {foundProduct.title}, Desc: {foundProduct.desc}
-                </div>
-            ) : ''
-        }
-    </div>
+      <div>
+          <SignUp/>
+      </div>
+
+    // <div className="App">
+    //     <form onSubmit={submitHandler}>
+    //       Title: <input name="title" onChange={(e)=>{setTitle(e.target.value)}}/>
+    //       Description: <input name="description" onChange={(e)=>{setDesc(e.target.value)}}/>
+    //       <input type="submit" value="Submit"/>
+    //     </form>
+    //     <table border={2}>
+    //         <tbody>
+    //         <tr>
+    //             <th>
+    //                 Title
+    //             </th>
+    //             <th>
+    //                 Description
+    //             </th>
+    //         </tr>
+    //     {
+    //         savedProducts ? savedProducts.map(product => (
+    //             <tr key={product.title}>
+    //                 <td> {product.title}</td>
+    //                 <td> {product.desc}</td>
+    //             </tr>
+    //         )) : ''
+    //     }
+    //         </tbody>
+    //     </table>
+    //     <form onSubmit={findSubmitHandler}>
+    //         Find: <input name="title" onChange={(e)=>{setTitle(e.target.value)}}/>
+    //         <input type="submit" value="Submit"/>
+    //     </form>
+    //     {
+    //         foundProduct ? (
+    //             <div>
+    //                 Found Product =   Title: {foundProduct.title}, Desc: {foundProduct.desc}
+    //             </div>
+    //         ) : ''
+    //     }
+    // </div>
   );
 }
 
