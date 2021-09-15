@@ -8,6 +8,7 @@ import axios from "axios";
 
 
 
+
 const SignUp = () => {
 
     let signUpOk = false;
@@ -18,6 +19,20 @@ const SignUp = () => {
         name: '',
         phone: ''
     }
+    const [name,setName] = useState();
+    const [email,setEmail] = useState();
+    const [password,setPassword] = useState();
+    const [phone,setPhone] = useState();
+    const [foundUser,setFoundUser] = useState();
+
+    const findSubmitHandler = async event => {
+        event.preventDefault();
+        axios.get('http://localhost:5000/api/users/'+name).then((resp)=>{
+            console.log(resp);
+            setFoundUser({name: resp.data[0].name, email: resp.data[0].email, password: resp.data[0].password,
+                phone: resp.data[0].phone});
+        });
+    };
 
     const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
         initialValues: userObj,
@@ -39,7 +54,7 @@ const SignUp = () => {
                 }
             });
             console.log(userObj);
-            axios.post('localhost:5000/api/signup', userObj).then( resp => {
+            axios.post('http://localhost:5000/api/signup', userObj).then( resp => {
                 console.log(resp);
             })
             .catch(err => {
@@ -113,15 +128,18 @@ const SignUp = () => {
                                 Sign up
                             </Button>
                         </Form>
+                        <form onSubmit={findSubmitHandler}>
+                            Find: <input name="name" onChange={(e)=>{setName(e.target.value)}}/>
+                            <input type="submit" value="Submit"/>
+                        </form>
+                        {
+                            foundUser ? (
+                                <div>
+                                    Found User =   Name: {foundUser.name}, Email: {foundUser.email}
+                                </div>
+                            ) : ''
+                        }
                     </Card.Body>
-                    {/*{"Signup" === props.mode ? (*/}
-                    {/*    <Card.Footer>*/}
-                    {/*        <div className="w-100 text-center mt-2">*/}
-                    {/*            Already have an account?*/}
-                    {/*        </div>*/}
-                    {/*    </Card.Footer>*/}
-                    {/*) : ''*/}
-                    {/*}*/}
                 </Card>
             </Container>
         </>
