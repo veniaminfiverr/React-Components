@@ -15,7 +15,7 @@ app.use('/api/products', productRoutes);
 
 mongoose
     .connect(
-        `mongodb://anasir:mongopassword@cluster0-shard-00-00.pc12j.mongodb.net:27017,cluster0-shard-00-01.pc12j.mongodb.net:27017,cluster0-shard-00-02.pc12j.mongodb.net:27017/store?ssl=true&replicaSet=atlas-yd2hqb-shard-0&authSource=admin&retryWrites=true&w=majority`
+        `mongodb://admin:admin@cluster0-shard-00-00.nk1m1.mongodb.net:27017,cluster0-shard-00-01.nk1m1.mongodb.net:27017,cluster0-shard-00-02.nk1m1.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-sfsjrq-shard-0&authSource=admin&retryWrites=true&w=majority`
     )
     .then(() => {
         app.listen(5000);
@@ -54,7 +54,7 @@ app.post('/api/signup/',
 
 app.get('/api/users/:name', async (req, res, next) => {
         const userName = req.params.name;
-        let user = await User.find({'title':userName});
+        let user = await User.find({'name':userName});
         res.json(user);
         console.log(res.json(user));
 
