@@ -2,7 +2,7 @@ import React from "react";
 import './App.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
-import SignUp from './components/SignUp'
+import SignUp from './components/SignUp/SignUp'
 
 
 

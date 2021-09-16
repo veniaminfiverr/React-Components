@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {Form, Card, Button, Container} from 'react-bootstrap'
 import {connect} from "react-redux";
+import {Link,useHistory} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
@@ -11,6 +12,7 @@ import axios from "axios";
 
 const SignUp = () => {
 
+    const history = useHistory();
     let signUpOk = false;
 
     let userObj = {
@@ -55,7 +57,8 @@ const SignUp = () => {
             });
             console.log(userObj);
             axios.post('http://localhost:5000/api/signup', userObj).then( resp => {
-                console.log(resp);
+                Swal.close();
+                history.push('/');
             })
             .catch(err => {
                 console.log(err);
