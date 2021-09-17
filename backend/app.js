@@ -4,12 +4,13 @@ const mongoose = require('mongoose');
 const productRoutes = require('./routes/ProductRoutes');
 const { check } = require('express-validator');
 const User = require('./models/User');
+const MultiStepForm = require('./models/MultiStepForm');
+const HttpError = require("./models/http-error");
+const {validationResult} = require("express-validator");
 
 
 const app = express();
 app.use(bodyParser.json());
-
-
 
 app.use('/api/products', productRoutes);
 
@@ -41,6 +42,10 @@ app.post('/api/signup/',
         check('phone').isLength({ min: 6 })
     ],
     async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+        }
         const createdUser = new User({
             name: req.body.name,
             email: req.body.email,
@@ -61,3 +66,35 @@ app.get('/api/users/:name', async (req, res, next) => {
     }
 );
 
+
+app.post('/api/multistepform/',
+    [
+        check('firstName').not().isEmpty().isAlphanumeric(),
+        check('lastName').not().isEmpty().isAlphanumeric(),
+        check('nickName').not().isEmpty().isAlphanumeric(),
+        check('emailAddress').not().isEmpty().isEmail(),
+        check('phoneNumber').isNumeric(),
+        check('alternatePhone').isNumeric(),
+        check('country').not().isEmpty().isAlphanumeric(),
+        check('city').not().isEmpty().isAlphanumeric(),
+    ],
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+        }
+        const multiStepForm = new MultiStepForm({
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            nickName:req.body.nickName,
+            emailAddress:req.body.emailAddress,
+            phoneNumber:req.body.phoneNumber,
+            alternatePhone: req.body.alternatePhone,
+            address:req.body.address,
+            country: req.body.country,
+            city:req.body.city
+        });
+        const result = await multiStepForm.save();
+        res.json(result);
+    }
+);
