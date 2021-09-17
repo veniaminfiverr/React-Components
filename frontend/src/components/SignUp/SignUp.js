@@ -131,18 +131,13 @@ const SignUp = () => {
                                 Sign up
                             </Button>
                         </Form>
-                        <form onSubmit={findSubmitHandler}>
-                            Find: <input name="name" onChange={(e)=>{setName(e.target.value)}}/>
-                            <input type="submit" value="Submit"/>
-                        </form>
-                        {
-                            foundUser ? (
-                                <div>
-                                    Found User =   Name: {foundUser.name}, Email: {foundUser.email}
-                                </div>
-                            ) : ''
-                        }
                     </Card.Body>
+                    <Card.Footer>
+                        <div className="w-100 text-center mt-2">
+                            Already have an account?
+                            <Link to='/'><b> Login here</b></Link>
+                        </div>
+                    </Card.Footer>
                 </Card>
             </Container>
         </>

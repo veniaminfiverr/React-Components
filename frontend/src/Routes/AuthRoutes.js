@@ -1,6 +1,7 @@
 import {Route} from "react-router-dom";
 import Layout from "../../components/UI/Layout/Layout";
 import Login from "../components/Login/Login";
+import React from "react";
 
 const sectionStyle = {
     backgroundSize: 'cover',

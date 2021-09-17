@@ -1,6 +1,7 @@
 import React from "react";
 import './App.css';
 import SignUp from './components/SignUp/SignUp'
+import Login from './components/Login/Login'
 import Switch from "react-bootstrap/Switch";
 import {Route} from "react-router-dom";
 import Home from "./components/Home/Home";
@@ -12,6 +13,9 @@ function App() {
   return (
       <>
         <Switch>
+            <Route path="/Signup">
+                <SignUp/>
+            </Route>
             <Route path="/Home">
                 <Home/>
             </Route>
@@ -22,7 +26,7 @@ function App() {
                 <BlockChain/>
             </Route>
             <Route path="/" exact>
-                <SignUp/>
+                <Login/>
             </Route>
         </Switch>
       </>

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import {Form, Card, Button, Container} from 'react-bootstrap'
-import {connect} from "react-redux";
 import {Link,useHistory} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
@@ -10,7 +9,7 @@ import axios from "axios";
 
 
 
-const SignUp = () => {
+const Login = () => {
 
     const history = useHistory();
     let signUpOk = false;
@@ -40,12 +39,10 @@ const SignUp = () => {
         initialValues: userObj,
         validationSchema: Yup.object({
             email: Yup.string().max(50, 'Email must be shorter than 50 characters').required().email(),
-            password: Yup.string().min(6, 'Password should be longer than 6 characters').required(),
-            name: Yup.string().required().matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field "),
-            phone: Yup.number().required()
+            password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
         }),
-        onSubmit: ({name,email, password,phone}) => {
-            let userObj = { email: email,  password: password,  name: name,  phone: phone}
+        onSubmit: ({email, password}) => {
+            let userObj = { email: email,  password: password}
             Swal.fire({
                 title: 'Please wait...',
                 html: '',
@@ -77,21 +74,7 @@ const SignUp = () => {
                         </h2>
                     </Card.Header>
                     <Card.Body className="p-3">
-                        {/*<div className="container">*/}
-                        {/*    <UploadImage setProfileImg={setProfileImg} placeholder={props.user ? props.user.img : ''} mode={props.mode}/>*/}
-                        {/*</div>*/}
                         <Form onSubmit={handleSubmit}>
-                            <Form.Group>
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control type="text"
-                                              value={values.name}
-                                              onChange={handleChange}
-                                              onBlur={handleBlur}
-                                              id="name"/>
-                                {touched.name && errors.name ? (
-                                    <div className="text-danger h6 pt-2 pb-2">{errors.name}</div>
-                                ): null}
-                            </Form.Group>
                             <Form.Group>
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control type="email"
@@ -116,38 +99,22 @@ const SignUp = () => {
                                     <div className="text-danger h6 pt-2 pb-2">{errors.password}</div>
                                 ): null}
                             </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Contact No.</Form.Label>
-                                <Form.Control type="number"
-                                              value={values.phone}
-                                              onChange={handleChange}
-                                              onBlur={handleBlur}
-                                              id="phone"/>
-                                {touched.phone && errors.phone ? (
-                                    <div className="text-danger h6 pt-2 pb-2">{errors.phone}</div>
-                                ): null}
-                            </Form.Group>
                             <Button className="w-100 mt-4" type={"submit"}>
-                                Sign up
+                                Login
                             </Button>
                         </Form>
-                        <form onSubmit={findSubmitHandler}>
-                            Find: <input name="name" onChange={(e)=>{setName(e.target.value)}}/>
-                            <input type="submit" value="Submit"/>
-                        </form>
-                        {
-                            foundUser ? (
-                                <div>
-                                    Found User =   Name: {foundUser.name}, Email: {foundUser.email}
-                                </div>
-                            ) : ''
-                        }
                     </Card.Body>
+                    <Card.Footer>
+                        <div className="w-100 text-center mt-2">
+                            Create an account?
+                            <Link to='/Signup'><b>Sign Up!</b></Link>
+                        </div>
+                    </Card.Footer>
                 </Card>
             </Container>
         </>
     )
 }
 
-export default SignUp;
+export default Login;
 
