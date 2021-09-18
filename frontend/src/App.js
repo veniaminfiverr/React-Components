@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import SignUp from './components/SignUp/SignUp'
 import Login from './components/Login/Login'
 import Switch from "react-bootstrap/Switch";
-import {Route, useHistory} from "react-router-dom";
+import {Route} from "react-router-dom";
 import Home from "./components/Home/Home";
 import MultiStepForm from "./components/MultipStepForm/MultiStepForm";
 import BlockChain from "./components/BlockChain/BlockChain";

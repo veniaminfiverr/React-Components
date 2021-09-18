@@ -43,10 +43,12 @@ const FeedTile =(props) => {
             name:props.text,
             rating:value,
             feedback:feedback,
-            userId: user._id,
-            token:localStorage.getItem("token")
+            userId: user.id
         }
-        axios.post('http://localhost:5000/api/feeds/'+feedBack.name, feedBack).then( resp => {
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}` }
+        };
+        axios.post('http://localhost:5000/api/feeds/'+feedBack.name, feedBack, config).then( resp => {
           //  Swal.fire('Saved!', '', 'success');
             if(props.client) {
                 props.client.send(JSON.stringify({

@@ -37,8 +37,10 @@ const Feeds = () => {
         if(null == user || !user) {
             history.push('/');
         }
-
-        axios.get(`http://localhost:5000/api/feeds/${user._id}`).then(resp => {
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}` }
+        };
+        axios.get(`http://localhost:5000/api/feeds/${user.id}`,config).then(resp => {
             let userFeeds = resp.data;
             let updatedFeeds = [];
             feeds.map(feed => {

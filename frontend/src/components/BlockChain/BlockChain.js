@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Wallet from "./Wallet/Wallet";
 import Chain from "./Chain/Chain";
 import arrow from "../../assets/arrow.png";

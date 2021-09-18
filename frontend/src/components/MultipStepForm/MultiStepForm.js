@@ -6,7 +6,7 @@ import {
 import BasicInfo from "./Steps/BasicInfo";
 import ContactInfo from "./Steps/ContactInfo";
 import AddressInfo from "./Steps/AddressInfo";
-import React from "react";
+import React, {useEffect} from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
@@ -16,36 +16,14 @@ const nextStyle = { background: '#33c3f0' }
 
 const MultiStepForm = (props) => {
     const history = useHistory();
-    const steps = [
-        {name: 'StepOne', component: <BasicInfo/>},
-        {name: 'StepTwo', component: <ContactInfo/>},
-        {name: 'StepThree', component: <AddressInfo/>}
-    ];
-    const onSubmit = (data) => {
-        if(data.firstName === '' || data.lastName === '' || data.nickName === ''
-            || data.emailAddress === ''|| data.phoneNumber === ''|| data.alternatePhone === ''
-            || data.address === ''|| data.country === ''|| data.city === '') {
-            return;
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        if(null == user || !user) {
+            history.push('/');
         }
-        Swal.fire({
-            title: 'Please wait...',
-            html: '',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
-        axios.post('http://localhost:5000/api/multistepform', data).then( resp => {
-            Swal.close();
-            Swal.fire('Saved!', '', 'success');
-            history.push('/Home');
-        })
-            .catch(err => {
-                console.log(err);
-            });
-        Swal.close()
-    };
+    },[])
+
     const methods = useForm({
         defaultValues: {
             firstName: "",
@@ -56,18 +34,45 @@ const MultiStepForm = (props) => {
             alternatePhone: "",
             address: "",
             country: "",
-            city: "",
-            token:localStorage.getItem("token")
+            city: ""
         },
     });
+    const steps = [
+        {name: 'StepOne', component: <BasicInfo/>},
+        {name: 'StepTwo', component: <ContactInfo/>},
+        {name: 'StepThree', component: <AddressInfo/>}
+    ];
+
+    const isInValid = () => {
+        const data = methods.control._formValues;
+        return (data.firstName === '' || data.lastName === '' || data.nickName === ''
+            || data.emailAddress === ''|| data.phoneNumber === ''|| data.alternatePhone === ''
+            || data.address === ''|| data.country === ''|| data.city === '')
+    };
+
+    const onSubmit = (data) => {
+        if(isInValid()) {
+            Swal.fire('Fields Empty!', '', 'error');
+            return;
+        }
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}` }
+        };
+        axios.post('http://localhost:5000/api/multistepform', data, config).then( resp => {
+            Swal.fire('Saved!', '', 'success');
+            history.push('/Home');
+        }).catch(err => {
+            Swal.fire('Error Occurred!', '', 'error');
+            });
+    };
     const submit = (data) => {
     }
     return(
-        <div className="container">
+        <div className="container card pb-5">
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(submit)}>
                     <Multistep showNavigation={true} steps={steps} prevStyle={prevStyle} nextStyle={nextStyle} />
-                    <input type="submit" value="Submit" onClick={methods.handleSubmit(onSubmit)}/>
+                    <input type="submit" value="Submit" onClick={methods.handleSubmit(onSubmit)} className="btn btn-lg btn-primary w-100 mt-5"/>
                 </form>
             </FormProvider>
         </div>
