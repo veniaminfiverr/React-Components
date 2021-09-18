@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.js": "/React-Components/static/js/main.1cb795d1.chunk.js",
+    "main.js.map": "/React-Components/static/js/main.1cb795d1.chunk.js.map",
+    "runtime-main.js": "/React-Components/static/js/runtime-main.f483e0da.js",
+    "runtime-main.js.map": "/React-Components/static/js/runtime-main.f483e0da.js.map",
+    "static/css/2.f2512455.chunk.css": "/React-Components/static/css/2.f2512455.chunk.css",
+    "static/js/2.4924a32c.chunk.js": "/React-Components/static/js/2.4924a32c.chunk.js",
+    "static/js/2.4924a32c.chunk.js.map": "/React-Components/static/js/2.4924a32c.chunk.js.map",
+    "static/js/3.69386c19.chunk.js": "/React-Components/static/js/3.69386c19.chunk.js",
+    "static/js/3.69386c19.chunk.js.map": "/React-Components/static/js/3.69386c19.chunk.js.map",
+    "index.html": "/React-Components/index.html",
+    "static/css/2.f2512455.chunk.css.map": "/React-Components/static/css/2.f2512455.chunk.css.map",
+    "static/js/2.4924a32c.chunk.js.LICENSE.txt": "/React-Components/static/js/2.4924a32c.chunk.js.LICENSE.txt",
+    "static/media/blockChain.15555a29.jpg": "/React-Components/static/media/blockChain.15555a29.jpg",
+    "static/media/canada.cd5aa75d.jpg": "/React-Components/static/media/canada.cd5aa75d.jpg",
+    "static/media/china.81a66fb0.jpg": "/React-Components/static/media/china.81a66fb0.jpg",
+    "static/media/egypt.c18d76bc.jpg": "/React-Components/static/media/egypt.c18d76bc.jpg",
+    "static/media/feed.4a8ad8aa.png": "/React-Components/static/media/feed.4a8ad8aa.png",
+    "static/media/multiStep.6b0e9506.jpg": "/React-Components/static/media/multiStep.6b0e9506.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f483e0da.js",
+    "static/css/2.f2512455.chunk.css",
+    "static/js/2.4924a32c.chunk.js",
+    "static/js/main.1cb795d1.chunk.js"
+  ]
+}
