@@ -49,9 +49,7 @@ wsServer.on('request', function (request) {
 });
 
 mongoose
-    .connect(
-        `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-shard-00-00.nk1m1.mongodb.net:27017,cluster0-shard-00-01.nk1m1.mongodb.net:27017,cluster0-shard-00-02.nk1m1.mongodb.net:27017/${process.env.DB_NAME}?ssl=true&replicaSet=atlas-sfsjrq-shard-0&authSource=admin&retryWrites=true&w=majority`
-    )
+    .connect(process.env.DB_STRING)
     .then(() => {
         console.log('connected')
         app.listen(process.env.PORT || 5000);
