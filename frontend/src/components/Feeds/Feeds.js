@@ -37,6 +37,22 @@ const Feeds = () => {
         if(null == user || !user) {
             history.push('/');
         }
+
+        axios.get(`http://localhost:5000/api/feeds/${user._id}`).then(resp => {
+            let userFeeds = resp.data;
+            let updatedFeeds = [];
+            feeds.map(feed => {
+                let updatedFeed = {...feed};
+                const foundFeed = userFeeds.filter(fd => fd.name === feed.text)[0];
+                if(foundFeed) {
+                    updatedFeed.rating = foundFeed.rating;
+                    updatedFeed.feedback = foundFeed.feedback;
+                }
+                updatedFeeds.push(updatedFeed);
+            });
+            setFeeds(updatedFeeds);
+        }).catch(err => {
+        });
         client.onopen = () => {
             console.log('WebSocket Client Connected');
         };
@@ -50,21 +66,6 @@ const Feeds = () => {
                 });
             }
         };
-        axios.get(`http://localhost:5000/api/feeds/${user._id}`).then(resp => {
-            let userFeeds = resp.data;
-            let updatedFeeds = [];
-            feeds.map(feed => {
-               const foundFeed = userFeeds.filter(fd => fd.name === feed.text);
-               if(foundFeed) {
-                   feed.rating = foundFeed[0].rating;
-                   feed.feedback = foundFeed[0].feedback;
-               }
-                updatedFeeds.push(feed);
-            });
-            setFeeds(updatedFeeds);
-            console.log(feeds)
-        }).catch(err => {
-        });
     },[]);
     return (
         <div className="container mt-5">
