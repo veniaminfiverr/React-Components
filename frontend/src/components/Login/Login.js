@@ -1,45 +1,25 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import {Form, Card, Button, Container} from 'react-bootstrap'
-import {Link,useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
-
-
 const Login = () => {
 
     const history = useHistory();
-    let signUpOk = false;
 
     let userObj = {
         email: '',
-        password: '',
-        name: '',
-        phone: ''
+        password: ''
     }
-    const [name,setName] = useState();
-    const [email,setEmail] = useState();
-    const [password,setPassword] = useState();
-    const [phone,setPhone] = useState();
-    const [foundUser,setFoundUser] = useState();
-
-    const findSubmitHandler = async event => {
-        event.preventDefault();
-        axios.get('http://localhost:5000/api/users/'+name).then((resp)=>{
-            console.log(resp);
-            setFoundUser({name: resp.data[0].name, email: resp.data[0].email, password: resp.data[0].password,
-                phone: resp.data[0].phone});
-        });
-    };
 
     const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
         initialValues: userObj,
         validationSchema: Yup.object({
             email: Yup.string().max(50, 'Email must be shorter than 50 characters').required().email(),
-            password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+            password: Yup.string().min(6, 'Password should be longer than 6 characters').required(),
         }),
         onSubmit: ({email, password}) => {
             let userObj = { email: email,  password: password}
@@ -52,21 +32,19 @@ const Login = () => {
                     Swal.showLoading()
                 }
             });
-            console.log(userObj);
-            axios.post('http://localhost:5000/api/signup', userObj).then( resp => {
-                Swal.close();
-                history.push('/');
-            })
-                .catch(err => {
-                    console.log(err);
-                });
-            Swal.close()
+            axios.post('http://localhost:5000/api/login', userObj).then( resp => {
+                localStorage.setItem("user",JSON.stringify(resp.data));
+                history.push('/Home');
+            }).catch(err => {
+                Swal.fire('User not found!', '', 'error');
+            });
+            Swal.close();
         }
     });
 
     return(
         <>
-            <Container className= "w-auto mt-4">
+            <Container className= "w-50 mt-4">
                 <Card>
                     <Card.Header>
                         <h2 className="text-center mb-2 mt-2">
@@ -107,7 +85,7 @@ const Login = () => {
                     <Card.Footer>
                         <div className="w-100 text-center mt-2">
                             Create an account?
-                            <Link to='/Signup'><b>Sign Up!</b></Link>
+                            <Link to='/signup'><b>Sign Up!</b></Link>
                         </div>
                     </Card.Footer>
                 </Card>

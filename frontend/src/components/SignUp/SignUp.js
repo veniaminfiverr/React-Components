@@ -1,19 +1,14 @@
 import React, {useEffect, useState} from "react"
 import {Form, Card, Button, Container} from 'react-bootstrap'
-import {connect} from "react-redux";
 import {Link,useHistory} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
-
-
 const SignUp = () => {
 
     const history = useHistory();
-    let signUpOk = false;
 
     let userObj = {
         email: '',
@@ -21,20 +16,6 @@ const SignUp = () => {
         name: '',
         phone: ''
     }
-    const [name,setName] = useState();
-    const [email,setEmail] = useState();
-    const [password,setPassword] = useState();
-    const [phone,setPhone] = useState();
-    const [foundUser,setFoundUser] = useState();
-
-    const findSubmitHandler = async event => {
-        event.preventDefault();
-        axios.get('http://localhost:5000/api/users/'+name).then((resp)=>{
-            console.log(resp);
-            setFoundUser({name: resp.data[0].name, email: resp.data[0].email, password: resp.data[0].password,
-                phone: resp.data[0].phone});
-        });
-    };
 
     const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
         initialValues: userObj,
@@ -55,13 +36,12 @@ const SignUp = () => {
                     Swal.showLoading()
                 }
             });
-            console.log(userObj);
             axios.post('http://localhost:5000/api/signup', userObj).then( resp => {
                 Swal.close();
                 history.push('/');
             })
             .catch(err => {
-                console.log(err);
+                Swal.fire('Some error occurred!', '', 'error');
             });
             Swal.close()
         }
@@ -69,7 +49,7 @@ const SignUp = () => {
     
     return(
         <>
-            <Container className= "w-auto mt-4">
+            <Container className= "w-50 mt-4">
                 <Card>
                     <Card.Header>
                         <h2 className="text-center mb-2 mt-2">
@@ -77,9 +57,6 @@ const SignUp = () => {
                         </h2>
                     </Card.Header>
                     <Card.Body className="p-3">
-                        {/*<div className="container">*/}
-                        {/*    <UploadImage setProfileImg={setProfileImg} placeholder={props.user ? props.user.img : ''} mode={props.mode}/>*/}
-                        {/*</div>*/}
                         <Form onSubmit={handleSubmit}>
                             <Form.Group>
                                 <Form.Label>Name</Form.Label>
@@ -135,7 +112,7 @@ const SignUp = () => {
                     <Card.Footer>
                         <div className="w-100 text-center mt-2">
                             Already have an account?
-                            <Link to='/'><b> Login here</b></Link>
+                            <Link to='/'><b>Log in!</b></Link>
                         </div>
                     </Card.Footer>
                 </Card>

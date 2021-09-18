@@ -24,7 +24,7 @@ class Chain {
             const myBitArray = sjcl.hash.sha256.hash(nonce + solution)
             const attempt = sjcl.codec.hex.fromBits(myBitArray)
             if(attempt.substr(0,4) === '0000'){
-                console.log(`Solved: ${solution}`);
+                //console.log(`Solved: ${solution}`);
                 return solution;
             }
             solution += 1;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Tile from "../Tile/Tile";
 import {useHistory} from "react-router-dom";
 import blockChain from '../../assets/blockChain.jpg';
@@ -14,7 +14,7 @@ const Home = () => {
     }
 
     const onViewFeedsClick =  () => {
-        history.push('/Feeds');
+        history.push('/Feeds', );
     }
 
     const onViewBlockChainClick =  () => {

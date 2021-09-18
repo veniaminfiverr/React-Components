@@ -52,15 +52,12 @@ const BlockChain =  (props) => {
             Wallet.sendMoney(event.target.amount.value,payerWallet.publicKey,payerWallet.privateKey,payeeWallet.publicKey,payerWallet.name,payeeWallet.name);
             payerWallet.balance = parseInt(payeeWallet.balance) - parseInt(event.target.amount.value);
             payeeWallet.balance = parseInt(payeeWallet.balance) + parseInt(event.target.amount.value);
-            console.log(payerWalletIndex);
-            console.log(payeeWalletIndex);
             wallets.splice(payerWalletIndex,1);
             payeeWalletIndex = wallets.findIndex(w => w.name === event.target.payeeName.value);
             wallets.splice(payeeWalletIndex,1);
             const updatedWallets = [...wallets];
             updatedWallets.push(payerWallet);
             updatedWallets.push(payeeWallet);
-            console.log(updatedWallets)
             setWallets(updatedWallets);
             event.target.amount.value = '';
             event.target.payeeName.value = '';

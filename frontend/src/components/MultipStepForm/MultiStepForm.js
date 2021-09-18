@@ -36,7 +36,6 @@ const MultiStepForm = (props) => {
                 Swal.showLoading()
             }
         });
-        console.log(data);
         axios.post('http://localhost:5000/api/multistepform', data).then( resp => {
             Swal.close();
             Swal.fire('Saved!', '', 'success');
@@ -61,7 +60,6 @@ const MultiStepForm = (props) => {
         },
     });
     const submit = (data) => {
-        console.log('dummy');
     }
     return(
         <div className="container">
