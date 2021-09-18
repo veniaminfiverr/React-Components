@@ -33,7 +33,7 @@ const Login = () => {
                 }
             });
             axios.post('http://localhost:5000/api/login', userObj).then( resp => {
-                localStorage.setItem("user",JSON.stringify(resp.data));
+                localStorage.setItem("token",JSON.stringify(resp.data));
                 history.push('/Home');
             }).catch(err => {
                 Swal.fire('User not found!', '', 'error');

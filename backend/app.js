@@ -10,9 +10,13 @@ const {validationResult} = require("express-validator");
 const Feed = require('./models/Feed');
 const webSocketServer = require('websocket').server;
 const http = require('http');
+const jwt = require('jsonwebtoken');
+
 
 const app = express();
 app.use(bodyParser.json());
+
+supersecret_dont_share = 'simsisasimG';
 
 mongoose
     .connect(
@@ -71,7 +75,13 @@ app.post('/api/login/',
         if(!user || (user.length > 0 && user[0].password !== req.body.password)) {
             return next(new HttpError('User not found.', 422));
         }
-        res.json(user[0]);
+        let token = jwt.sign({email: user[0].email}, 'supersecret_dont_share', {expiresIn: '1h'});
+        let updatedUser = {
+            "id": user[0]._id,
+            "name":user[0].name,
+            "token":token
+        };
+        res.json(updatedUser);
     }
 );
 
@@ -80,7 +90,6 @@ app.get('/api/users/:name', async (req, res, next) => {
         let user = await User.find({'name':userName});
         res.json(user);
         console.log(res.json(user));
-
     }
 );
 
@@ -95,11 +104,18 @@ app.post('/api/multistepform/',
         check('alternatePhone').isNumeric(),
         check('country').not().isEmpty().isAlphanumeric(),
         check('city').not().isEmpty().isAlphanumeric(),
+        check('token').not().isEmpty(),
     ],
     async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+        }
+        let decodedToken;
+        try {
+            decodedToken = jwt.verify(req.body.token, "supersecret_dont_share");
+        } catch {
+            next("error");
         }
         const multiStepForm = new MultiStepForm({
             firstName:req.body.firstName,
@@ -122,12 +138,19 @@ app.post('/api/feeds/:feedTitle',
         check('name').not().isEmpty().isAlphanumeric(),
         check('rating').not().isEmpty().isAlphanumeric(),
         check('feedback').not().isEmpty(),
-        check('userId').not().isEmpty()
+        check('userId').not().isEmpty(),
+        check('token').not().isEmpty()
     ],
     async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+        }
+        let decodedToken;
+        try {
+            decodedToken = jwt.verify(req.body.token, "supersecret_dont_share");
+        } catch {
+            next("error");
         }
         let createdFeed;
         const feedTitle = req.params.feedTitle;

@@ -56,7 +56,8 @@ const MultiStepForm = (props) => {
             alternatePhone: "",
             address: "",
             country: "",
-            city: ""
+            city: "",
+            token:localStorage.getItem("token")
         },
     });
     const submit = (data) => {
