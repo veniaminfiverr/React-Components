@@ -43,7 +43,8 @@ const FeedTile =(props) => {
             name:props.text,
             rating:value,
             feedback:feedback,
-            userId: user._id
+            userId: user._id,
+            token: user.token
         }
         axios.post('http://localhost:5000/api/feeds/'+feedBack.name, feedBack).then( resp => {
           //  Swal.fire('Saved!', '', 'success');
