@@ -36,7 +36,7 @@ const SignUp = () => {
                     Swal.showLoading()
                 }
             });
-            axios.post('http://localhost:5000/api/signup', userObj).then( resp => {
+            axios.post('https://veniamin.herokuapp.com/api/signup', userObj).then( resp => {
                 Swal.close();
                 history.push('/');
             })

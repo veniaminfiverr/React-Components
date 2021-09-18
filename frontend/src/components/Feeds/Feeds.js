@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 const Feeds = () => {
     const history = useHistory();
-    const client = new W3CWebSocket('ws://localhost:8001');
+    const client = new W3CWebSocket('ws://veniamin.herokuapp.com:8001');
     const [feeds,setFeeds] = useState([
         {
             "imgPath": canada,
@@ -40,7 +40,7 @@ const Feeds = () => {
         const config = {
             headers: { Authorization: `Bearer ${user.token}` }
         };
-        axios.get(`http://localhost:5000/api/feeds/${user.id}`,config).then(resp => {
+        axios.get(`https://veniamin.herokuapp.com/api/feeds/${user.id}`,config).then(resp => {
             let userFeeds = resp.data;
             let updatedFeeds = [];
             feeds.map(feed => {
