@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 const Feeds = () => {
     const history = useHistory();
-    const client = new W3CWebSocket('ws://veniamin.herokuapp.com:8001');
+    const client = new WebSocket('wss://veniamin.herokuapp.com');
     const [feeds,setFeeds] = useState([
         {
             "imgPath": canada,

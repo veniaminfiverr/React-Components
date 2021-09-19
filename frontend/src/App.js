@@ -2,7 +2,7 @@ import React from "react";
 import SignUp from './components/SignUp/SignUp'
 import Login from './components/Login/Login'
 import Switch from "react-bootstrap/Switch";
-import {Route} from "react-router-dom";
+import {Route,Redirect} from "react-router-dom";
 import Home from "./components/Home/Home";
 import MultiStepForm from "./components/MultipStepForm/MultiStepForm";
 import BlockChain from "./components/BlockChain/BlockChain";
@@ -40,6 +40,7 @@ function App() {
             <Route path="/" exact>
                 <Login/>
             </Route>
+            <Redirect to="/" />
         </Switch>
       </>
   );
